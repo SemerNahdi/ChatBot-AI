@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import Header from "@/components/Header";
-
+import { Toaster } from "react-hot-toast";
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -32,6 +32,7 @@ export default function RootLayout({
         <div className="mx-auto max-w-6xl h-screen">
           <Header />
           {children}
+          <Toaster />
         </div>
       </body>
     </html>

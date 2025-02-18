@@ -24,6 +24,7 @@ import {
 import LandingSections from "@/components/LandingSections";
 import { motion, AnimatePresence } from "framer-motion";
 import { useChat } from "@ai-sdk/react";
+import toast from "react-hot-toast";
 
 const MessageBubble = ({
   role,
@@ -86,7 +87,10 @@ const MessageBubble = ({
   
   {/* Copy button - Hidden by default, appears on hover */}
   <button
-  onClick={handleCopy}
+  onClick={() => {
+    handleCopy();  // Call handleCopy
+    toast.success("Copied successfully!"); // Show appropriate toast message based on 'copied'
+  }}
   className={`absolute top-2 ${
     role === "user" ? "-left-8" : "-right-8"
   } p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200`}
@@ -213,7 +217,10 @@ export default function Chat() {
                       <Loader2 className="w-5 h-5 animate-spin text-primary" />
                       <Button
                         variant="link"
-                        onClick={stop}
+                        onClick={() => {
+                          stop();
+                          toast.success("canceled !");
+                        }}
                         className="text-destructive"
                       >
                         Cancel
@@ -240,9 +247,9 @@ export default function Chat() {
                     onChange={handleInputChange}
                     placeholder="Type your message..."
                     disabled={isLoading}
-                    className="flex-1 p-4 h-12 text-lg"
+                    className="flex-1 p-4 h-10 text-lg"
                   />
-                  <Button type="submit" size="icon" disabled={isLoading}>
+                  <Button type="submit" size="icon" disabled={isLoading} className="h-10 flex items-center justify-center">
                     {isLoading ? (
                       <Loader2 className="w-4 h-4 animate-spin" />
                     ) : (
