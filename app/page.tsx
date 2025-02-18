@@ -48,62 +48,64 @@ const MessageBubble = ({
       exit={{ opacity: 0, y: -20 }}
       className={`mb-4 ${role === "user" ? "text-right" : "text-left"}`}
     >
-     <div
-  className={`relative inline-block max-w-[85%] p-4 rounded-lg group ${
-    role === "user"
-      ? "bg-primary text-primary-foreground"
-      : "bg-muted border border-gray-200"
-  } transition-all duration-200 hover:shadow-md`}
->
-  <ReactMarkdown
-    children={content}
-    remarkPlugins={[remarkGfm]}
-    components={{
-      code({ node, inline, className, children, ...props }) {
-        return inline ? (
-          <code
-            {...props}
-            className={`px-1 rounded ${
-              role === "user" ? "bg-primary-foreground/20" : "bg-gray-200"
-            }`}
-          >
-            {children}
-          </code>
-        ) : (
-          <pre
-            {...props}
-            className={`p-2 rounded overflow-x-auto ${
-              role === "user" ? "bg-primary-foreground/20" : "bg-gray-100"
-            }`}
-          >
-            <code>{children}</code>
-          </pre>
-        );
-      },
-      ul: ({ children }) => <ul className="list-disc ml-4">{children}</ul>,
-      ol: ({ children }) => <ol className="list-decimal ml-4">{children}</ol>,
-    }}
-  />
-  
-  {/* Copy button - Hidden by default, appears on hover */}
-  <button
-  onClick={() => {
-    handleCopy();  // Call handleCopy
-    toast.success("Copied successfully!"); // Show appropriate toast message based on 'copied'
-  }}
-  className={`absolute top-2 ${
-    role === "user" ? "-left-8" : "-right-8"
-  } p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200`}
->
-  {copied ? (
-    <Check className="h-4 w-6 text-green-600" />
-  ) : (
-    <Copy className="h-4 w-6 text-gray-600" />
-  )}
-</button>
+      <div
+        className={`relative inline-block max-w-[85%] p-4 rounded-lg group ${
+          role === "user"
+            ? "bg-primary text-primary-foreground"
+            : "bg-muted border border-gray-200"
+        } transition-all duration-200 hover:shadow-md`}
+      >
+        <ReactMarkdown
+          children={content}
+          remarkPlugins={[remarkGfm]}
+          components={{
+            code({ node, inline, className, children, ...props }) {
+              return inline ? (
+                <code
+                  {...props}
+                  className={`px-1 rounded ${
+                    role === "user" ? "bg-primary-foreground/20" : "bg-gray-200"
+                  }`}
+                >
+                  {children}
+                </code>
+              ) : (
+                <pre
+                  {...props}
+                  className={`p-2 rounded overflow-x-auto ${
+                    role === "user" ? "bg-primary-foreground/20" : "bg-gray-100"
+                  }`}
+                >
+                  <code>{children}</code>
+                </pre>
+              );
+            },
+            ul: ({ children }) => (
+              <ul className="list-disc ml-4">{children}</ul>
+            ),
+            ol: ({ children }) => (
+              <ol className="list-decimal ml-4">{children}</ol>
+            ),
+          }}
+        />
 
-</div>
-
+        {/* Copy button - Hidden by default, appears on hover */}
+        <button
+          onClick={() => {
+            handleCopy(); // Call handleCopy
+            toast.success("Copied successfully!"); // Show appropriate toast message based on 'copied'
+          }}
+          className={`absolute top-2 ${
+            role === "user" ? "-left-8" : "-right-8"
+          } p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200`}
+        >
+          {copied ? (
+            <Check className="h-4 w-6 text-green-600" />
+          ) : (
+            <Copy className="h-4 w-6 text-gray-600" />
+          )}
+        </button>
+      </div>
     </motion.div>
   );
 };
@@ -162,7 +164,7 @@ export default function Chat() {
             <Button
               onClick={() => setIsChatOpen(!isChatOpen)}
               size="icon"
-              className="rounded-full h-14 w-14 shadow-lg bg-blue-600 hover:bg-blue-700"
+              className="rounded-full h-14 w-14 shadow-lg bg-black hover:bg-gray-800"
             >
               {isChatOpen ? (
                 <ArrowDownCircleIcon className="h-6 w-6" />
@@ -249,7 +251,12 @@ export default function Chat() {
                     disabled={isLoading}
                     className="flex-1 p-4 h-10 text-lg"
                   />
-                  <Button type="submit" size="icon" disabled={isLoading} className="h-10 flex items-center justify-center">
+                  <Button
+                    type="submit"
+                    size="icon"
+                    disabled={isLoading}
+                    className="h-10 flex items-center justify-center"
+                  >
                     {isLoading ? (
                       <Loader2 className="w-4 h-4 animate-spin" />
                     ) : (
